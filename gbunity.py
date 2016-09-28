@@ -41,11 +41,19 @@ def scrape(username, password):
 	browser.find_element_by_name("password").send_keys(password)
 	browser.find_element_by_name('submit').click()
 
-	thread.sleep(50000)
-	browser.quit()
+	# Find list of active sites
+	browser.execute_script("return dhtml_more_tabs();")
+	terms = []
+	terms = browser.find_elements_by_class_name('termContainer')
+	currentTerm = terms[0]
+
+
+ 	
+		
 
 if __name__ == '__main__':
 	if (USERNAME == "" and PASSWORD == ""):
 		USERNAME = raw_input("Enter your GT Username: ") 
 		PASSWORD = raw_input("Enter your password: ")
 	scrape(USERNAME, PASSWORD)
+
