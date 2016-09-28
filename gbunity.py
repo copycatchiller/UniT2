@@ -42,14 +42,24 @@ def scrape(username, password):
 	browser.find_element_by_name('submit').click()
 
 	# Find list of active sites
+	
+	try:
+		element = WebDriverWait(browser, 5).until(
+			EC.presence_of_element_located((By.ID, "siteLinkList"))
+			)
+	except TimeoutException:
+		print "Loading too hella long fam"
+
 	browser.execute_script("return dhtml_more_tabs();")
 	terms = []
 	terms = browser.find_elements_by_class_name('termContainer')
 	currentTerm = terms[0]
 
+	classes = currentTerm.find_elements_by_tag_name('a')
+	classLinks = []
 
- 	
-		
+	for c in classes:
+		classLinks.append(c.get_attribute("href"))
 
 if __name__ == '__main__':
 	if (USERNAME == "" and PASSWORD == ""):
