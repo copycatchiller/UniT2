@@ -1,5 +1,8 @@
 '''
 Daniel Marcos -- 2016
+UniT2 Combines scrapes TSquare to generate a combined gradebook of
+all your current classes 
+
 '''
 
 from selenium import webdriver
@@ -60,6 +63,22 @@ def scrape(username, password):
 	classLinks = []
 	for c in classes:
 		classLinks.append(c.get_attribute("href"))
+
+
+	# For every link
+		# Visit it
+		# Find gradebook link and visit it
+		# Go through every item in the gradebook and add it to master
+	
+
+	for link in classLinks:
+		browser.get(link)
+		toolMenu = browser.find_element_by_id("toolMenu")
+		for elem in toolMenu.find_elements_by_tag_name("a"):
+			if elem.get_attribute("class") == "icon-sakai-gradebook-tool ":
+				browser.get(elem.get_attribute("href"))
+				break
+
 
 if __name__ == '__main__':
 	if (USERNAME == "" and PASSWORD == ""):
