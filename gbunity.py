@@ -42,7 +42,6 @@ def scrape(username, password):
 	browser.find_element_by_name('submit').click()
 
 	# Find list of active sites
-	
 	try:
 		element = WebDriverWait(browser, 5).until(
 			EC.presence_of_element_located((By.ID, "siteLinkList"))
@@ -50,14 +49,15 @@ def scrape(username, password):
 	except TimeoutException:
 		print "Loading too hella long fam"
 
+	# Clicks on "Active Sites"
 	browser.execute_script("return dhtml_more_tabs();")
+	# Selects the current term
 	terms = []
 	terms = browser.find_elements_by_class_name('termContainer')
 	currentTerm = terms[0]
-
+	# Finds all the lnks under the current term
 	classes = currentTerm.find_elements_by_tag_name('a')
 	classLinks = []
-
 	for c in classes:
 		classLinks.append(c.get_attribute("href"))
 
