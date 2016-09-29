@@ -35,7 +35,7 @@ def processTable():
 	#TODO(danielms215): Switch to default content
 
 
-def scrape(username, password):
+def loginToT2(username, password):
 	# Navigate to the main page and click on login button
 	url = "https://t-square.gatech.edu/portal"
 	browser.get(url)
@@ -57,6 +57,12 @@ def scrape(username, password):
 	browser.find_element_by_name("password").send_keys(password)
 	browser.find_element_by_name('submit').click()
 
+
+'''
+You must be logged into T2 to get current classes
+Returns a list of links to each class site for the current term.
+'''
+def getCurrentClasses():
 	# Find list of active sites
 	try:
 		element = WebDriverWait(browser, 5).until(
@@ -77,16 +83,10 @@ def scrape(username, password):
 	for c in classes:
 		classLinks.append(c.get_attribute("href"))
 
-
-	# For every link
-		# Visit it
-		# Find gradebook link and visit it
-		# Go through every item in the gradebook and add it to master
-	# Find tbody
-	# find if_n_hide_division_ where n goes from 0 to number of assignments
-	# get the children of that table row
+	return classLinks
 
 
+def processGradebooks(classLinks):
 	for link in classLinks:
 		browser.get(link)
 		toolMenu = browser.find_element_by_id("toolMenu")
@@ -97,11 +97,11 @@ def scrape(username, password):
 				processTable()
 				break
 
-
-
 if __name__ == '__main__':
 	if (USERNAME == "" and PASSWORD == ""):
 		USERNAME = raw_input("Enter your GT Username: ") 
 		PASSWORD = raw_input("Enter your password: ")
-	scrape(USERNAME, PASSWORD)
-
+	
+	loginToT2(USERNAME, PASSWORD)
+	classLinks = getCurrentClasses()
+	processGradebooks(classLinks)
