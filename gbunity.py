@@ -18,23 +18,6 @@ PASSWORD = ""
 CHROME_PATH = "/home/danielms/Development/UniT2/chromedriver"
 browser = webdriver.Chrome(executable_path = CHROME_PATH)
 
-# TODO(danielms215): Refactor into individual functions
-
-def processTable():
-	# First we have to find the table. It has a class="listHier wideTable lines"
-	iframe = browser.find_elements_by_tag_name('iframe')[0]
-	browser.switch_to_frame(iframe)
-	gbTable = None
-	for t in browser.find_elements_by_tag_name("table"):
-		if t.get_attribute("class") == "listHier wideTable lines":
-			gbTable = t
-	if gbTable:
-		rows = browser.find_elements_by_tag_name("tr")
-		# TODO(danielms215): Go through each row, get title and grad
-
-	#TODO(danielms215): Switch to default content
-
-
 def loginToT2(username, password):
 	# Navigate to the main page and click on login button
 	url = "https://t-square.gatech.edu/portal"
@@ -96,6 +79,20 @@ def processGradebooks(classLinks):
 				# Here we are looking at one Gradebook
 				processTable()
 				break
+
+def processTable():
+	# First we have to find the table. It has a class="listHier wideTable lines"
+	iframe = browser.find_elements_by_tag_name('iframe')[0]
+	browser.switch_to_frame(iframe)
+	gbTable = None
+	for t in browser.find_elements_by_tag_name("table"):
+		if t.get_attribute("class") == "listHier wideTable lines":
+			gbTable = t
+	if gbTable:
+		rows = browser.find_elements_by_tag_name("tr")
+		# TODO(danielms215): Go through each row, get title and grad
+
+	#TODO(danielms215): Switch to default content
 
 def createCombinedGradebook():
 	loginToT2(USERNAME, PASSWORD)
