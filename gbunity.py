@@ -106,4 +106,4 @@ if __name__ == '__main__':
 		USERNAME = raw_input("Enter your GT Username: ") 
 		PASSWORD = raw_input("Enter your password: ")
 	
-	createCombinedGradebook():
+	createCombinedGradebook()
