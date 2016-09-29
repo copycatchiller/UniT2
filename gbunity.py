@@ -16,13 +16,26 @@ from selenium.common.exceptions import TimeoutException
 USERNAME = ""
 PASSWORD = ""
 CHROME_PATH = "/home/danielms/Development/UniT2/chromedriver"
+browser = webdriver.Chrome(executable_path = CHROME_PATH)
+
+# TODO(danielms215): Refactor into individual functions
+
+def processTable():
+	# First we have to find the table. It has a class="listHier wideTable lines"
+	iframe = browser.find_elements_by_tag_name('iframe')[0]
+	browser.switch_to_frame(iframe)
+	gbTable = None
+	for t in browser.find_elements_by_tag_name("table"):
+		if t.get_attribute("class") == "listHier wideTable lines":
+			gbTable = t
+	if gbTable:
+		rows = browser.find_elements_by_tag_name("tr")
+		# TODO(danielms215): Go through each row, get title and grad
+
+	#TODO(danielms215): Switch to default content
+
 
 def scrape(username, password):
-	
-	# Starts the webdriver, in this case, Chrome
-	path_to_chromedriver = '/home/danielms/Development/UniT2/chromedriver' 
-	browser = webdriver.Chrome(executable_path = path_to_chromedriver)
-
 	# Navigate to the main page and click on login button
 	url = "https://t-square.gatech.edu/portal"
 	browser.get(url)
@@ -69,7 +82,10 @@ def scrape(username, password):
 		# Visit it
 		# Find gradebook link and visit it
 		# Go through every item in the gradebook and add it to master
-	
+	# Find tbody
+	# find if_n_hide_division_ where n goes from 0 to number of assignments
+	# get the children of that table row
+
 
 	for link in classLinks:
 		browser.get(link)
@@ -77,7 +93,10 @@ def scrape(username, password):
 		for elem in toolMenu.find_elements_by_tag_name("a"):
 			if elem.get_attribute("class") == "icon-sakai-gradebook-tool ":
 				browser.get(elem.get_attribute("href"))
+				# Here we are looking at one Gradebook
+				processTable()
 				break
+
 
 
 if __name__ == '__main__':
