@@ -97,11 +97,13 @@ def processGradebooks(classLinks):
 				processTable()
 				break
 
+def createCombinedGradebook():
+	loginToT2(USERNAME, PASSWORD)
+	processGradebooks(getCurrentClasses)
+
 if __name__ == '__main__':
 	if (USERNAME == "" and PASSWORD == ""):
 		USERNAME = raw_input("Enter your GT Username: ") 
 		PASSWORD = raw_input("Enter your password: ")
 	
-	loginToT2(USERNAME, PASSWORD)
-	classLinks = getCurrentClasses()
-	processGradebooks(classLinks)
+	createCombinedGradebook():
