@@ -99,7 +99,7 @@ def processGradebooks(classLinks):
 
 def createCombinedGradebook():
 	loginToT2(USERNAME, PASSWORD)
-	processGradebooks(getCurrentClasses)
+	processGradebooks(getCurrentClasses())
 
 if __name__ == '__main__':
 	if (USERNAME == "" and PASSWORD == ""):
