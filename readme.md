@@ -7,6 +7,5 @@ How to use:
 
 * Download the ZIP
 * CD into it
-* Open gbunity.python, change the CHROME_PATH to the path of the chromedriver in the zip you downloaded.
 * Run <code>python gbunity.py</code>
 * Enter your username and password when prompted
