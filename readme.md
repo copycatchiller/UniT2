@@ -7,6 +7,6 @@ How to use:
 
 * Install selenium by runninng: <code>pip install selenium</code>  
 * Download the ZIP
-* Unzip folder and CD into it
+* Unzip folder and <code>cd</code> into it
 * Run <code>python gbunity.py</code>
 * Enter your username and password when prompted
