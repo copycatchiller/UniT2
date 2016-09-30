@@ -1,6 +1,6 @@
 '''
 Daniel Marcos -- 2016
-UniT2 Combines scrapes TSquare to generate a combined gradebook of
+UniT2 scrapes TSquare to generate a combined gradebook of
 all your current classes 
 
 '''
