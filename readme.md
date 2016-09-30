@@ -6,6 +6,6 @@ UniT2 scrapes your T-Square using Selenium to generate a combined gradebook of a
 How to use:
 
 * Download the ZIP
-* CD into it
+* Unzip folder and CD into it
 * Run <code>python gbunity.py</code>
 * Enter your username and password when prompted
