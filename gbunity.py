@@ -10,6 +10,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
+import time
 
 
 # Replace with your own
@@ -68,10 +69,15 @@ def getCurrentClasses():
 
 	return classLinks
 
-
 def processGradebooks(classLinks):
+	
 	for link in classLinks:
 		browser.get(link)
+		classTitle = browser.find_elements_by_css_selector(".selectedTab")[0].find_element_by_tag_name("a").find_element_by_tag_name("span").text
+
+		print " \n -----------------------------------------"
+		print classTitle, "\n"
+
 		toolMenu = browser.find_element_by_id("toolMenu")
 		for elem in toolMenu.find_elements_by_tag_name("a"):
 			if elem.get_attribute("class") == "icon-sakai-gradebook-tool ":
@@ -85,14 +91,36 @@ def processTable():
 	iframe = browser.find_elements_by_tag_name('iframe')[0]
 	browser.switch_to_frame(iframe)
 	gbTable = None
+	time.sleep(1)
 	for t in browser.find_elements_by_tag_name("table"):
 		if t.get_attribute("class") == "listHier wideTable lines":
 			gbTable = t
 	if gbTable:
-		rows = browser.find_elements_by_tag_name("tr")
-		# TODO(danielms215): Go through each row, get title and grad
-
-	#TODO(danielms215): Switch to default content
+		# Classes have different things on the gradebook so we need to know
+		# what position contains title and what position contains grade
+		head = gbTable.find_element_by_tag_name("thead")
+		headRow = head.find_elements_by_tag_name("th")
+		pos = 0
+		titlePos = None
+		gradePos = None
+		for pos in range(len(headRow)):
+			header = headRow[pos].find_elements_by_tag_name("a")
+			if len(header) > 0:
+				headerText = header[0].text
+				if headerText == "Title":
+					titlePos = pos
+				elif headerText == "Grade*" or headerText == "Grade":
+					gradePos = pos
+			pos = pos + 1
+		body = gbTable.find_element_by_tag_name("tbody")
+		rows = body.find_elements_by_tag_name("tr")
+		# TODO(danielms215): Go through each row, get title and grade
+		
+		for row in rows:
+			rowData = row.find_elements_by_tag_name("td")
+			print rowData[gradePos].text, " --- ", rowData[titlePos].text
+			
+		browser.switch_to_default_content()
 
 def createCombinedGradebook():
 	loginToT2(USERNAME, PASSWORD)
