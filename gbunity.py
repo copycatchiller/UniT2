@@ -16,7 +16,7 @@ import time
 # Replace with your own
 USERNAME = ""
 PASSWORD = ""
-CHROME_PATH = "/home/danielms/Development/UniT2/chromedriver"
+CHROME_PATH = "./chromedriver"
 browser = webdriver.Chrome(executable_path = CHROME_PATH)
 
 def loginToT2(username, password):
