@@ -114,8 +114,8 @@ def processTable():
 			pos = pos + 1
 		body = gbTable.find_element_by_tag_name("tbody")
 		rows = body.find_elements_by_tag_name("tr")
-		# TODO(danielms215): Go through each row, get title and grade
 		
+		# Print title and grade
 		for row in rows:
 			rowData = row.find_elements_by_tag_name("td")
 			print rowData[gradePos].text, " --- ", rowData[titlePos].text
